@@ -69,8 +69,17 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
-    //room
+    // room
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
+
+    // koin
+    implementation(libs.koin.android)
+    testImplementation(libs.koin.test)
+
+    // test
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+
 }
