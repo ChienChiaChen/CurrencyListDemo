@@ -82,4 +82,7 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.coroutines.test)
 
+    // data time
+    implementation(libs.kotlinx.datetime)
+
 }
