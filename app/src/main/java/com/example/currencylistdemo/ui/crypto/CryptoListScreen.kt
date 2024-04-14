@@ -101,7 +101,7 @@ fun CryptoListScreen(viewModel: CryptoListViewViewModel = koinViewModel()) {
                 }
 
                 LazyColumn(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).padding(bottom = 100.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(

@@ -1,10 +1,13 @@
 package com.example.currencylistdemo.data.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.currencylistdemo.utils.DateTimeUtil
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity("Crypto")
 data class Crypto(
     @PrimaryKey
@@ -19,12 +22,4 @@ data class Crypto(
 
     @ColumnInfo(name = "created")
     val created: Long = DateTimeUtil.now(),
-) {
-    companion object {
-        val mockList = listOf(
-            Crypto(id = "BTC", name = "BitCoin", symbol = "BTC"),
-            Crypto(id = "ETH", name = "Ethereum", symbol = "ETH"),
-            Crypto(id = "XRP", name = "XRP", symbol = "XRP"),
-        )
-    }
-}
+) : Parcelable

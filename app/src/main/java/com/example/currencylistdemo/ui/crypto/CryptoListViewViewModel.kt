@@ -66,7 +66,13 @@ class CryptoListViewViewModel(
 
     fun addAllCryptos() {
         viewModelScope.launch(Dispatchers.IO) {
-            cryptoRepository.insertAllMockCryptos(Crypto.Companion.mockList)
+            cryptoRepository.insertAllMockCryptos(
+                listOf(
+                    Crypto(id = "BTC", name = "BitCoin", symbol = "BTC"),
+                    Crypto(id = "ETH", name = "Ethereum", symbol = "ETH"),
+                    Crypto(id = "XRP", name = "XRP", symbol = "XRP"),
+                )
+            )
             loadCryptos()
         }
     }
