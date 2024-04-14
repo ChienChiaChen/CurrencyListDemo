@@ -10,8 +10,6 @@ class CryptoListSearch {
         }
         return cryptos.filter { crypto ->
             crypto.symbol.startsWith(prefix = query, ignoreCase = true)
-        }.sortedBy {
-            it.created
         }
     }
 }

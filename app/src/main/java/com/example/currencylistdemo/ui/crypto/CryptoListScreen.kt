@@ -75,18 +75,27 @@ fun CryptoListScreen(viewModel: CryptoListViewViewModel = koinViewModel()) {
             }
 
             if (state.cryptos.isEmpty()) {
-                Icon(
-                    imageVector = Icons.Filled.Warning,
-                    contentDescription = "no results",
-                    modifier = Modifier
-                        .padding(top = 30.dp)
-                        .size(200.dp)
-                        .align(CenterHorizontally)
-                )
-            } else {
-                if (state.searchText.isBlank()) {
+                if (state.searchText.isNotEmpty())// In search state
+                    Icon(
+                        imageVector = Icons.Filled.Warning,
+                        contentDescription = "no results",
+                        modifier = Modifier
+                            .padding(top = 30.dp)
+                            .size(200.dp)
+                            .align(CenterHorizontally)
+                    )
+                else { // Init state
                     CryptoOperation(
-                        add = viewModel::addCrypto,
+                        add = viewModel::addNewCrypto,
+                        addAll = viewModel::addAllCryptos,
+                        deleteAll = viewModel::deleteAllCryptos
+                    )
+                }
+            } else {
+                if (state.searchText.isBlank()) { // hide it up when user is searching.
+                    CryptoOperation(
+                        add = viewModel::addNewCrypto,
+                        addAll = viewModel::addAllCryptos,
                         deleteAll = viewModel::deleteAllCryptos
                     )
                 }

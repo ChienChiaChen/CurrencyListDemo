@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.currencylistdemo.data.entity.Crypto
 import com.example.currencylistdemo.domain.repository.CryptoRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -34,7 +34,7 @@ class CryptoListViewViewModel(
 
     fun loadCryptos() {
         viewModelScope.launch {
-            savedStateHandle["cryptos"] = cryptoRepository.getCryptos().first()
+            savedStateHandle["cryptos"] = cryptoRepository.getCryptos()
         }
     }
 
@@ -50,14 +50,31 @@ class CryptoListViewViewModel(
     }
 
     fun deleteAllCryptos() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             cryptoRepository.deleteAllCryptos()
+            loadCryptos()
         }
     }
 
-    fun addCrypto() {
-        viewModelScope.launch {
-            // TODO: jason
+    fun addNewCrypto() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newCoin = generateRandomString()
+            cryptoRepository.insertCrypto(Crypto(id = newCoin, name = newCoin, symbol = newCoin))
+            loadCryptos()
         }
+    }
+
+    fun addAllCryptos() {
+        viewModelScope.launch(Dispatchers.IO) {
+            cryptoRepository.insertAllMockCryptos(Crypto.Companion.mockList)
+            loadCryptos()
+        }
+    }
+
+    private fun generateRandomString(): String {
+        val allowedChars = ('A'..'Z') + ('0'..'9')
+        return (1..5)
+            .map { allowedChars.random() }
+            .joinToString("")
     }
 }

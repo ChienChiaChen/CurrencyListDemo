@@ -13,29 +13,42 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CryptoOperation(
-    add:()->Unit,
-    deleteAll:()->Unit,
+    add: () -> Unit,
+    addAll: () -> Unit,
+    deleteAll: () -> Unit,
 ) {
     Row(modifier = Modifier.fillMaxWidth()) {
         Button(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(12.dp)
                 .weight(1f),
             elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
             shape = RoundedCornerShape(16.dp),
             onClick = { add.invoke() }
         ) {
-            Text(text = "Insert", modifier = Modifier.padding(16.dp))
+            Text(text = "Insert")
         }
+
         Button(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(12.dp)
+                .weight(1f),
+            elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
+            shape = RoundedCornerShape(16.dp),
+            onClick = { addAll.invoke() }
+        ) {
+            Text(text = "Add all")
+        }
+
+        Button(
+            modifier = Modifier
+                .padding(12.dp)
                 .weight(1f),
             elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
             shape = RoundedCornerShape(16.dp),
             onClick = { deleteAll.invoke() }
         ) {
-            Text(text = "Delete all", modifier = Modifier.padding(16.dp))
+            Text(text = "Delete all")
         }
     }
 }

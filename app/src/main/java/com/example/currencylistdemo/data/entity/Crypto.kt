@@ -19,4 +19,12 @@ data class Crypto(
 
     @ColumnInfo(name = "created")
     val created: Long = DateTimeUtil.now(),
-)
+) {
+    companion object {
+        val mockList = listOf(
+            Crypto(id = "BTC", name = "BitCoin", symbol = "BTC"),
+            Crypto(id = "ETH", name = "Ethereum", symbol = "ETH"),
+            Crypto(id = "XRP", name = "XRP", symbol = "XRP"),
+        )
+    }
+}
