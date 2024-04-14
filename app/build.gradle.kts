@@ -76,6 +76,7 @@ dependencies {
 
     // koin
     implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose.navigation)
     testImplementation(libs.koin.test)
 
     // test
@@ -84,5 +85,9 @@ dependencies {
 
     // data time
     implementation(libs.kotlinx.datetime)
+
+    // navigation
+    implementation(libs.navigation.compose)
+    implementation(libs.lifecycle.viewmodel.compose)
 
 }
