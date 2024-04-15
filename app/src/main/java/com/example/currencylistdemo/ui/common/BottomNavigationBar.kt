@@ -22,15 +22,10 @@ fun BottomNavigationBar(navController: NavHostController) {
                 alwaysShowLabel = true,
                 icon = { Icon(item.icon, contentDescription = item.title) },
                 label = { Text(item.title) },
-                selected = currentRoute == item.path,
+                selected = item.title.equals(currentRoute, true),
                 onClick = {
-                    navController.navigate(item.path) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) { saveState = true }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navController.popBackStack()
+                    navController.navigate(item.path)
                 }
             )
         }
