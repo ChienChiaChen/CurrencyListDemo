@@ -7,16 +7,16 @@ import androidx.compose.material.icons.filled.ArrowForward
 sealed class NavItem {
     object Crypto :
         Item(
-            path = NavPath.CRYPTO.toString(),
             title = NavTitle.CRYPTO,
-            icon = Icons.Default.ArrowBack
+            icon = Icons.Default.ArrowBack,
+            page = 0
         )
 
     object Fiat :
         Item(
-            path = NavPath.FIAT.toString(),
             title = NavTitle.FIAT,
-            icon = Icons.Default.ArrowForward
+            icon = Icons.Default.ArrowForward,
+            page = 1
         )
 
 }

@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
 import com.example.currencylistdemo.ui.common.MainScreen
 import com.example.currencylistdemo.ui.theme.CurrencyListDemoTheme
 
@@ -16,9 +15,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             CurrencyListDemoTheme {
                 // A surface container using the 'background' color from the theme
-                val navController = rememberNavController()
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    MainScreen(navController = navController)
+                    MainScreen()
                 }
             }
         }

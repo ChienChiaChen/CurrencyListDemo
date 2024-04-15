@@ -1,37 +1,88 @@
 package com.example.currencylistdemo.ui.common
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.currencylistdemo.ui.common.navigation.NavItem
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.example.currencylistdemo.ui.common.navigation.Item
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
-    val navItems = listOf(NavItem.Crypto, NavItem.Fiat)
+fun BottomNavigationBar(
+    pagerState: PagerState,
+    items: List<Item>
+) {
+    Row(
+        modifier = Modifier
+            .height(60.dp)
+            .background(Color.Black)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        items.forEach { item ->
+            AddItem(
+                item = item,
+                pagerState = pagerState
+            )
+        }
+    }
+}
 
-    NavigationBar {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        navItems.forEachIndexed { index, item ->
-            NavigationBarItem(
-                alwaysShowLabel = true,
-                icon = { Icon(item.icon, contentDescription = item.title) },
-                label = { Text(item.title) },
-                selected = item.title.equals(currentRoute, true),
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun AddItem(
+    item: Item,
+    pagerState: PagerState
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val selected = pagerState.currentPage == item.page
+    val background = if (selected) Color.Magenta else Color.Transparent
+
+    Box(
+        modifier = Modifier
+            .height(40.dp)
+            .clip(CircleShape)
+            .background(background)
+            .clickable(
                 onClick = {
-                    navController.navigate(item.path) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) { saveState = true }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(item.page)
                     }
                 }
+            )
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(vertical = 8.dp, horizontal = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Icon(
+                imageVector = item.icon,
+                contentDescription = item.title,
+                tint = Color.White
+            )
+            Text(
+                text = item.title,
+                color = Color.White
             )
         }
     }
