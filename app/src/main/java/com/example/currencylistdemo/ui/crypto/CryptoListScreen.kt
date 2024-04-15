@@ -26,6 +26,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,6 +49,12 @@ fun CryptoListScreen(viewModel: CryptoListViewViewModel = koinViewModel()) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .onKeyEvent {
+                    if (it.key == Key.Back && state.isSearchActive) {
+                        viewModel.onToggleSearch()
+                        true
+                    } else false
+                }
         ) {
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -101,7 +110,9 @@ fun CryptoListScreen(viewModel: CryptoListViewViewModel = koinViewModel()) {
                 }
 
                 LazyColumn(
-                    modifier = Modifier.weight(1f).padding(bottom = 100.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = 100.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(
