@@ -30,15 +30,15 @@ class CryptoRepositoryImplTest {
     }
 
     @Test
-    fun `fetch crypto data `() = runBlocking {
+    fun `fetch crypto data`() = runBlocking {
         coEvery { cryptoDao.getAllCurrencies() } returns mockCryptoList
-        cryptoRepository.getCryptos().collectLatest { repo ->
-            assert(mockCryptoList.size == repo.size)
-        }
+        val repoList = cryptoRepository.getCryptos()
+        assert(mockCryptoList.size == repoList.size)
+
     }
 
     @Test
-    fun `insert crypto data `() = runBlocking {
+    fun `insert crypto data`() = runBlocking {
         val crypto = Crypto("BTH", "BitCoin cash", "BCH")
         cryptoRepository.insertCrypto(crypto)
         coEvery { cryptoDao.insert(any()) } returns 1
@@ -49,7 +49,7 @@ class CryptoRepositoryImplTest {
 
 
     @Test
-    fun `delete all crypto data `() = runBlocking {
+    fun `delete all crypto data`() = runBlocking {
         cryptoRepository.deleteAllCryptos()
         coEvery { cryptoDao.clearAll() } returns 1
         coVerify(exactly = 1) {
@@ -59,7 +59,7 @@ class CryptoRepositoryImplTest {
 
 
     @After
-    fun shoutdown() {
+    fun shutdown() {
         unmockkAll()
         unmockkObject()
     }

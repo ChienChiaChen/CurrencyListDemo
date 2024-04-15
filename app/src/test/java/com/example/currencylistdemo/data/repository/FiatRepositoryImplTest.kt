@@ -29,15 +29,14 @@ class FiatRepositoryImplTest {
     }
 
     @Test
-    fun `fetch fiat data `() = runBlocking {
+    fun `fetch fiat data`() = runBlocking {
         coEvery { fiatDao.getAllFiats() } returns mockFiatList
-        fiatRepository.getFiats().collectLatest { repo ->
-            assert(mockFiatList.size == repo.size)
-        }
+        val repoList = fiatRepository.getFiats()
+        assert(mockFiatList.size == repoList.size)
     }
 
     @Test
-    fun `insert fait data `() = runBlocking {
+    fun `insert fiat data`() = runBlocking {
         val crypto = Fiat(id = "SGD", name = "Singapore Dollar", symbol = "", code = "SDG")
         fiatRepository.insertFiat(crypto)
         coEvery { fiatDao.insert(any()) } returns 1
@@ -48,7 +47,7 @@ class FiatRepositoryImplTest {
 
 
     @Test
-    fun `delete all fiat data `() = runBlocking {
+    fun `delete all fiat data`() = runBlocking {
         fiatRepository.deleteFiats()
         coEvery { fiatDao.clearAll() } returns 1
         coVerify(exactly = 1) {
@@ -58,7 +57,7 @@ class FiatRepositoryImplTest {
 
 
     @After
-    fun shoutdown() {
+    fun shutdown() {
         unmockkAll()
         unmockkObject()
     }
