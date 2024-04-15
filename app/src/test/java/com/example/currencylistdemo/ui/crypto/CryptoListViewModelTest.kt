@@ -1,10 +1,10 @@
-package com.example.currencylistdemo.ui
+package com.example.currencylistdemo.ui.crypto
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.currencylistdemo.MainDispatcherRule
-import com.example.currencylistdemo.data.entity.Fiat
-import com.example.currencylistdemo.domain.repository.FiatRepository
-import com.example.currencylistdemo.ui.fiat.FiatListViewViewModel
+import com.example.currencylistdemo.data.entity.Crypto
+import com.example.currencylistdemo.domain.repository.CryptoRepository
+import com.example.currencylistdemo.ui.crypto.CryptoListViewViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -16,10 +16,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class FiatListViewViewModelTest {
+class CryptoListViewModelTest {
 
-    private lateinit var viewModel: FiatListViewViewModel
-    private val fiatRepository: FiatRepository = mockk(relaxed = true)
+    private lateinit var viewModel: CryptoListViewViewModel
+    private val cryptoRepository: CryptoRepository = mockk(relaxed = true)
     private val savedStateHandle: SavedStateHandle = mockk(relaxed = true)
 
     @get:Rule
@@ -29,8 +29,8 @@ class FiatListViewViewModelTest {
     fun setup() {
         unmockkAll()
         unmockkObject()
-        viewModel = FiatListViewViewModel(
-            fiatRepository = fiatRepository,
+        viewModel = CryptoListViewViewModel(
+            cryptoRepository = cryptoRepository,
             savedStateHandle = savedStateHandle
         )
     }
@@ -50,10 +50,10 @@ class FiatListViewViewModelTest {
     }
 
     @Test
-    fun `load fiats`() {
-        viewModel.loadFiats()
+    fun `load cryptos`() {
+        viewModel.loadCryptos()
         coVerify {
-            fiatRepository.getFiats()
+            cryptoRepository.getCryptos()
         }
     }
 
@@ -82,41 +82,36 @@ class FiatListViewViewModelTest {
     }
 
     @Test
-    fun `delete all fiats`() {
-        viewModel.deleteAllFiats()
+    fun `delete all cryptos`() {
+        viewModel.deleteAllCryptos()
 
         coVerify {
-            fiatRepository.deleteFiats()
-            fiatRepository.getFiats()
+            cryptoRepository.deleteAllCryptos()
+            cryptoRepository.getCryptos()
         }
     }
 
     @Test
-    fun `add new fiat`() {
-        viewModel.addNewFiat()
+    fun `add new crypto`() {
+        viewModel.addNewCrypto()
 
         coVerify {
-            fiatRepository.insertFiat(any())
-            fiatRepository.getFiats()
+            cryptoRepository.insertCrypto(any())
+            cryptoRepository.getCryptos()
         }
     }
 
     @Test
-    fun `add all mock fiats`() {
-        viewModel.addAllFiats()
+    fun `add all mock cryptos`() {
+        viewModel.addAllCryptos()
 
         coVerify {
-            fiatRepository.insertAllMockFiats(
-                listOf(
-                    Fiat(id = "SGD", name = "Singapore Dollar", code = "SGD", symbol = "$"),
-                    Fiat(id = "EUR", name = "Euro", code = "EUR", symbol = "€"),
-                    Fiat(id = "GBP", name = "British Pound", code = "GBP", symbol = "£"),
-                    Fiat(id = "HKD", name = "Hong Kong Dollar", code = "HKD", symbol = "$"),
-                    Fiat(id = "JPY", name = "Japanese Yen", code = "JPY", symbol = "¥"),
-                )
-            )
-            fiatRepository.getFiats()
+            cryptoRepository.insertAllMockCryptos(listOf(
+                Crypto(id = "BTC", name = "BitCoin", symbol = "BTC"),
+                Crypto(id = "ETH", name = "Ethereum", symbol = "ETH"),
+                Crypto(id = "XRP", name = "XRP", symbol = "XRP"),
+            ))
+            cryptoRepository.getCryptos()
         }
     }
-
 }
