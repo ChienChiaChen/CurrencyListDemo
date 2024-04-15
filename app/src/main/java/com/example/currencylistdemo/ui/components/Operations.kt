@@ -1,4 +1,4 @@
-package com.example.currencylistdemo.ui.crypto
+package com.example.currencylistdemo.ui.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CryptoOperation(
+fun Operations(
     add: () -> Unit,
     addAll: () -> Unit,
     deleteAll: () -> Unit,

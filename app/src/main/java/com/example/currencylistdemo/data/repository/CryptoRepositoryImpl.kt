@@ -9,7 +9,7 @@ class CryptoRepositoryImpl(
 ) : CryptoRepository {
 
     override suspend fun insertAllMockCryptos(cryptos: List<Crypto>) {
-        cryptoDao.insertAllMockCryptos(cryptos)
+        cryptoDao.insertAll(cryptos)
     }
 
     override suspend fun insertCrypto(crypto: Crypto) {

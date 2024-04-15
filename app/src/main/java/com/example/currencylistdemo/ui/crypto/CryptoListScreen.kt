@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.currencylistdemo.ui.components.HideableSearchTextField
+import com.example.currencylistdemo.ui.components.Operations
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,7 +95,7 @@ fun CryptoListScreen(viewModel: CryptoListViewViewModel = koinViewModel()) {
                             .align(CenterHorizontally)
                     )
                 else { // Init state
-                    CryptoOperation(
+                    Operations(
                         add = viewModel::addNewCrypto,
                         addAll = viewModel::addAllCryptos,
                         deleteAll = viewModel::deleteAllCryptos
@@ -102,7 +103,7 @@ fun CryptoListScreen(viewModel: CryptoListViewViewModel = koinViewModel()) {
                 }
             } else {
                 if (state.searchText.isBlank()) { // hide it up when user is searching.
-                    CryptoOperation(
+                    Operations(
                         add = viewModel::addNewCrypto,
                         addAll = viewModel::addAllCryptos,
                         deleteAll = viewModel::deleteAllCryptos
