@@ -91,7 +91,6 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.lifecycle.viewmodel.compose)
 
-//    implementation("com.google.accompanist:accompanist-pager-indicators:0.13.0")
     implementation (libs.accompanist.pager)
     implementation(libs.androidx.material3)
 
