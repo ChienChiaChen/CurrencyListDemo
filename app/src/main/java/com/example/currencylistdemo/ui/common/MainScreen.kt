@@ -1,6 +1,7 @@
 package com.example.currencylistdemo.ui.common
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -39,7 +40,7 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                 query = state.searchText,
                 onQueryChange = viewModel::onSearchTextChange,
                 onSearch = viewModel::onSearchTextChange,
-                active = state.isSearchActive,
+                active = false,
                 onActiveChange = {},
                 modifier = Modifier
                     .fillMaxWidth()
@@ -59,7 +60,13 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
             BottomAppBar {
                 BottomNavigationBar(pagerState = pagerState, items = navItems)
             }
-        }) { paddingValues ->
+        }
+    ) { paddingValues ->
+
+        BackHandler(state.searchText.isNotEmpty()) {
+            viewModel.onSearchTextChange("")
+        }
+
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
