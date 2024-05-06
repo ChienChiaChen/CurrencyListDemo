@@ -7,6 +7,8 @@ import com.example.currencylistdemo.data.entity.Crypto
 import com.example.currencylistdemo.data.entity.Fiat
 import com.example.currencylistdemo.domain.repository.CryptoRepository
 import com.example.currencylistdemo.domain.repository.FiatRepository
+import com.example.currencylistdemo.ui.crypto.CryptoListSearch
+import com.example.currencylistdemo.ui.fiat.FiatListSearch
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -24,6 +26,8 @@ class MainViewModelTest {
     private val cryptoRepository: CryptoRepository = mockk(relaxed = true)
     private val fiatRepository: FiatRepository = mockk(relaxed = true)
     private val savedStateHandle: SavedStateHandle = mockk(relaxed = true)
+    private val searchCrypto: CryptoListSearch = mockk(relaxed = true)
+    private val searchFiat: FiatListSearch = mockk(relaxed = true)
 
     @get:Rule
     var coroutineRule = MainDispatcherRule()
@@ -33,6 +37,8 @@ class MainViewModelTest {
         unmockkAll()
         unmockkObject()
         viewModel = MainViewModel(
+            searchCrypto = searchCrypto,
+            searchFiat = searchFiat,
             cryptoRepository = cryptoRepository,
             fiatRepository = fiatRepository,
             savedStateHandle = savedStateHandle

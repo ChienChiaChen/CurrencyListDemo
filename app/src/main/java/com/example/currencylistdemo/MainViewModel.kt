@@ -18,13 +18,12 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MainViewModel(
+    private val searchCrypto: CryptoListSearch,
+    private val searchFiat: FiatListSearch,
     private val cryptoRepository: CryptoRepository,
     private val fiatRepository: FiatRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    private val searchCrypto = CryptoListSearch()
-    private val searchFiat = FiatListSearch()
 
     private val searchText = savedStateHandle.getStateFlow("searchText", "")
     private val cryptos = savedStateHandle.getStateFlow("cryptos", emptyList<Crypto>())
